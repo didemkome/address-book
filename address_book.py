@@ -1,5 +1,13 @@
 import sqlite3
 
+'''
+add : Add new contact
+list: List contacts
+remove: Delete contact
+q, quit, exit: Exit
+
+'''
+
 VERSION = '0.1.1'
 VALİD_COMMANDS = ['add', 'remove', 'list']
 DATABASE_FİLE = 'addressbook.db'
