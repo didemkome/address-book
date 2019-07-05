@@ -1,13 +1,14 @@
 Metadata-Version: 1.1
 Name: Address-Book
-Version: 1.0
+Version: 0.1.1
 Summary: Simple Command-Line Address Book Application
 Home-page: https://github.com/didmkme/Address-Book
 Author: Didem Nursal Kome
 Author-email: didemkome@gmail.com
-License: UNKNOWN
-Description: UNKNOWN
+License: MIT
+Description: ##Address Book##
+        
 Platform: UNKNOWN
-Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent

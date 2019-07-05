@@ -1,7 +1,11 @@
+README.md
 setup.py
 Address_Book.egg-info/PKG-INFO
 Address_Book.egg-info/SOURCES.txt
 Address_Book.egg-info/dependency_links.txt
+Address_Book.egg-info/entry_points.txt
+Address_Book.egg-info/not-zip-safe
 Address_Book.egg-info/top_level.txt
+D:/Address-book/__init__.py
 D:/Address-book/address_book.py
 D:/Address-book/addressbook_cmd.py

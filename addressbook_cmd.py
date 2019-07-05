@@ -1,61 +1,45 @@
+import os
 import sys
-import sqlite3
+import address_book
 
-VALİD_COMMANDS = ['add', 'remove', 'list']
-DATABASE_FİLE = 'addressbook_cmd.db'
+from argparse import ArgumentParser
 
-def add_person():
-    db = sqlite3.connect(DATABASE_FİLE)
-    connect = db.cursor()
-    full_name = input('Enter Full Name: ')
-    phone_number = input('Enter Phone Number: ')
-    email_address = input('Enter E-mail Address: ')
-    connect.execute('INSERT INTO people(full_name, phone_number, email_address) VALUES(?,?,?)', (full_name, phone_number, email_address))
-    db.commit()
-    connect.close()
+SELF_SCRIPT = sys.argv[0].split("/")[-1]
 
-def remove_person():
-    db = sqlite3.connect(DATABASE_FİLE)
-    connect = db.cursor()
-    ID = input('Enter people id to delete: ')
-    connect.execute('DELETE FROM people where id=?', (ID,))
-    db.commit() # Commit the changes to the database
-    connect.close()
-
-def list_person():
-    db = sqlite3.connect(DATABASE_FİLE)
-    connect = db.cursor() # create a new cursor
-    connect.execute('SELECT * FROM people')
-    records = connect.fetchall() #to fetch all tasks from the tasks table , return a list
-    if records:
-        print("{:<15} {:<15} {:<15} {:<15}".format('ID' , 'Full Name', 'Phone Number', 'E-mail Address'))
-        for row in records:
-            print ('{:<15} {:<15} {:<15} {:<15}'.format(row[0], row[1], row[2], row[3]))
-    connect.close()
-    return records
+HELPS = {
+    'command': '{} add | list | remove'.format(SELF_SCRIPT),
+    'add': "{} add 'My new task' 'Other task' 'more' or single item".format(SELF_SCRIPT),
+    'params': 'can be a task (string) or index (int)',
+}
 
 def main(argv=None):
-    db = sqlite3.connect(DATABASE_FİLE)
-    connect = db.cursor()
-    connect.execute("CREATE TABLE IF NOT EXISTS people( id INTEGER PRIMARY KEY, full_name, phone_number, email_address)")
-    db.commit()
 
-    while True:
-        task = input('Select task: ')
-        if task in ['exit' , 'quit' , 'q']:
-            print("Exiting.")
-            return 0
-        
-        if task in VALİD_COMMANDS:
-            if task == 'add':
-                add_person()
-            elif task == 'remove':
-                remove_person()
-            elif task == 'list':
-                list_person()
-            else:
-                pass
+    if argv is None:
+        argv = sys.argv
 
-    connect.close()
-if __name__ == '__main__':
-    sys.exit(main() )
+    command_choices = ['list', 'add', 'remove']
+
+    parser = ArgumentParser(prog=SELF_SCRIPT)
+    parser.add_argument('command', choices=command_choices, type=str, nargs='?', help=HELPS['command'])
+    parser.add_argument('params', type=str, nargs='*', help=HELPS['params'])
+    parser.add_argument('-v', '--version', action='version', version=address_book.VERSION)
+    args = parser.parse_args()
+
+    if args.command is None:
+        parser.print_help()
+        return 2
+    
+    if args.command.lower() == 'add':
+        app = address_book.AddressBookDatabase()
+        app.add_person()
+
+    if args.command.lower() == 'list':
+            app = address_book.AddressBookDatabase()
+            app.list_person()
+
+    if args.command.lower() == 'remove':
+            app = address_book.AddressBookDatabase()
+            app.remove_person()
+
+if __name__ == "__main__":
+    sys.exit(main())
