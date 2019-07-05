@@ -2,7 +2,7 @@
 
 Simple Python 3 address book application using a Sqlite database.
 
-##Overview
+## Overview
 
 This project is a simple address book application written in Python.
 
@@ -48,6 +48,6 @@ This project is a simple address book application written in Python.
         db.commit() # Commit the changes to the database
         connect.close()
 ```
-##License
+## License
 
 This project is licensed under the MIT License (https://rem.mit-license.org/).
